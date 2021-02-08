@@ -41,7 +41,16 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Logout') }}
+                                {{ __('Wyloguj') }}
+                            </x-dropdown-link>
+                        </form>
+                        <form method="GET" action="{{ route('users') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('users')"
+                                             onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Użytkownicy') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>

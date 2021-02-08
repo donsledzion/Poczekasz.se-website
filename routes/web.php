@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,5 +20,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/users', function () {
+    return view('users.list', ['users' => User::all(), 'header'=>'Userzy']);
+})->middleware(['auth'])->name('users');
 
 require __DIR__.'/auth.php';
