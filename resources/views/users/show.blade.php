@@ -8,7 +8,7 @@
                     <h2> Show Product</h2>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('users') }}"> Wróć</a>
+                    <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
                 </div>
             </div>
         </div>
@@ -17,13 +17,13 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Nazwa:</strong>
-                    <h1>{{ $user->name }}</h1>
+                    {{ $user->name }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Details:</strong>
-                    <h1>{{ $user->email }}</h1>
+                    <strong>Email:</strong>
+                    {{ $user->email }}
                 </div>
             </div>
         </div>

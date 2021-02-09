@@ -44,10 +44,10 @@
                                 {{ __('Wyloguj') }}
                             </x-dropdown-link>
                         </form>
-                        <form method="GET" action="{{ route('users') }}">
+                        <form method="GET" action="{{ route('users.index') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('users')"
+                            <x-dropdown-link :href="route('users.index')"
                                              onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Użytkownicy') }}

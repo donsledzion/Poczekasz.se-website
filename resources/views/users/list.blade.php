@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
     <div class="container">
         <table class="table table-hover">
             <thead>
@@ -18,9 +23,21 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->name }}</td>
                     <td>
-                        <a class="btn btn-info" href="{{ route('users/show',['id'=>$user->id]) }}">Pokaż</a>
-                        <a class="btn btn-primary" href="{{ route('users/edit',['id'=>$user->id]) }}">Edytuj</a>
-                        <a class="btn btn-danger" href="{{ route('users/delete',['id'=>$user->id]) }}">Usuń</a>
+                        @if(Auth::user()->permissions >= 256 && Auth::user()->id != $user->id)
+                            <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                        @endif
+                        @if(Auth::user()->permissions >= 128)
+                            <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Pokaż</a>
+                        @endif
+                        @if(Auth::user()->permissions >= 256)
+                            <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edytuj</a>
+                        @endif
+                        @if(Auth::user()->permissions >= 256 && Auth::user()->id != $user->id)
+                            <button type="submit" class="btn btn-danger">Usuń</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach
