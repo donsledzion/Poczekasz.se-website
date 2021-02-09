@@ -40,6 +40,12 @@
                     <textarea class="form-control" style="height:150px; width:500px" name="email" placeholder="Email">{{ $user->email }}</textarea>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Permissions: (16-User, 32-Vip, 128-Mod, 256-Admin)</strong>
+                    <textarea class="form-control" style="height:150px; width:500px" name="permissions" placeholder="Permissions">{{ $user->permissions }}</textarea>
+                </div>
+            </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Potwierdź</button>
             </div>
