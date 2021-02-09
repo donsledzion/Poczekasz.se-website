@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -39,15 +40,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'password' => 'required',
         ]);
 
-        Product::create($request->all());
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'permissions' => '16']);
 
         return redirect()->route('users.index')
-            ->with('success','Product created successfully.');
+            ->with('success','User Created successfully.');
     }
 
     /**

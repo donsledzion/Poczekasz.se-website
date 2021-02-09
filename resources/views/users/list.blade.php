@@ -1,10 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
+    @endif
+    @if(Auth::user()->permissions >= 256)
+    <center><div class="pull-right">
+        <a class="btn btn-success" href="{{ route('users.create') }}"> Dodaj użytkownika</a>
+    </div></center>
     @endif
     <div class="container">
         <table class="table table-hover">
