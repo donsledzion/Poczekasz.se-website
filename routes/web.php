@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/users', function () {
-    return view('users.list', ['users' => User::all(), 'header'=>'Userzy']);
-})->middleware(['auth'])->name('users');
+
+Route::resource('users', UserController::class);
 
 require __DIR__.'/auth.php';
