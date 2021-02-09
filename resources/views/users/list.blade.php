@@ -17,7 +17,11 @@
                     <th scope="row">{{ $user->id }}</th>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->name }}</td>
-                    <td></td>
+                    <td>
+                        <a class="btn btn-info" href="{{ route('users/show',['id'=>$user->id]) }}">Pokaż</a>
+                        <a class="btn btn-primary" href="{{ route('users/edit',['id'=>$user->id]) }}">Edytuj</a>
+                        <a class="btn btn-danger" href="{{ route('users/delete',['id'=>$user->id]) }}">Usuń</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

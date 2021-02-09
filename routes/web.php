@@ -25,4 +25,16 @@ Route::get('/users', function () {
     return view('users.list', ['users' => User::all(), 'header'=>'Userzy']);
 })->middleware(['auth'])->name('users');
 
+Route::get('/users/show/{id}', function ($id) {
+    return view('users.show', ['user' => User::find($id), 'header'=>'Prezentacja Usera']);
+})->middleware(['auth'])->name('users/show');
+
+Route::get('/users/edit/{id}', function ($id) {
+    return view('users.edit', ['user' => User::find($id), 'header'=>'Edycja Usera']);
+})->middleware(['auth'])->name('users/edit');
+
+Route::get('/users/delete/{id}', function ($id) {
+    return view('users.delete', ['user' => User::find($id), 'header'=>'Usunięcie Usera']);
+})->middleware(['auth'])->name('users/delete');
+
 require __DIR__.'/auth.php';
