@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
+use App\Models\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,17 +17,38 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome.default');
 });
 
-Route::get('/welcome', function () {
-    return view('welcome');
+Route::redirect('/welcome', '/');
+
+Route::group(['prefix' => 'wroclaw'], function () {
+    Route::redirect('/', '/welcome', 301);
+    Route::get('/welcome', function () {
+        return view('welcome.wroclaw');
+    });
 });
 
+Route::group(['prefix' => 'plk'], function () {
+        Route::redirect('/', '/underconstruction', 301);
+        Route::get('/underconstruction', function () {
+            return view('maintenance.underconstruction');
+        });
+        /*Route::redirect('/', '/welcome', 301);
+        Route::get('/welcome', function () {
+            return view('welcome.plk');
+        });*/
+    });
+    /*Route::get('/welcome', function () {
+
+    }); */
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+
+Route::resource('posts', PostController::class);
 
 Route::resource('users', UserController::class);
 

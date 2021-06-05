@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostTable.php extends Migration
+class CreatePostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,6 @@ class CreatePostTable.php extends Migration
             $table->string('name');
             $table->string('category');
             $table->string('posted_by');
-            $table->string('password');
             $table->string('views');
             $table->string('likes');
             $table->string('hahas');
