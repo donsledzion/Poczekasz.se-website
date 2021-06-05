@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PostController;
-use App\Models\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,19 +14,15 @@ use App\Models\Post;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome.default');
-});
 
-Route::redirect('/welcome', '/');
-
+//Routes for wroclaw module
 Route::group(['prefix' => 'wroclaw'], function () {
     Route::redirect('/', '/welcome', 301);
     Route::get('/welcome', function () {
         return view('welcome.wroclaw');
     });
 });
-
+//Routes for plk module
 Route::group(['prefix' => 'plk'], function () {
         Route::redirect('/', '/underconstruction', 301);
         Route::get('/underconstruction', function () {
@@ -39,17 +33,15 @@ Route::group(['prefix' => 'plk'], function () {
             return view('welcome.plk');
         });*/
     });
-    /*Route::get('/welcome', function () {
-
-    }); */
+//No module routes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+Route::get('/', function () {
+    return view('welcome.default');
+});
 
-
-
-Route::resource('posts', PostController::class);
-
+Route::redirect('/welcome', '/');
 Route::resource('users', UserController::class);
 
 require __DIR__.'/auth.php';
