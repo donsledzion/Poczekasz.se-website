@@ -1,6 +1,6 @@
 ## About Poczekasz.se
 This is site that shows us a train delays in Poland. Probably we will implement new functions to this site in the future.
-Project was made in Laravel (with also Laravel Breeze) and it doesn't have any more dependecies (excluding Laravel dependencies)
+Project was made in Laravel and it doesn't have any more dependecies
 
 ## Contributing
 
