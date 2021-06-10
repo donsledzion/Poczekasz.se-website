@@ -44,6 +44,7 @@
                                 {{ __('Wyloguj') }}
                             </x-dropdown-link>
                         </form>
+                        @if(Auth::user()->permissions >= 128)
                         <form method="GET" action="{{ route('users.index') }}">
                             @csrf
 
@@ -53,6 +54,7 @@
                                 {{ __('Użytkownicy') }}
                             </x-dropdown-link>
                         </form>
+                        @endif
                     </x-slot>
                 </x-dropdown>
             </div>

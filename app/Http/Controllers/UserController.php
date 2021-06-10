@@ -51,10 +51,12 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'permissions' => '16']);
+            'permissions' => '16',
+            'access_status' => 1],
+        );
 
         return redirect()->route('users.index')
-            ->with('success','User Created successfully.');
+            ->with('success','Konto utworzono pomyślnie.');
     }
 
     /**
