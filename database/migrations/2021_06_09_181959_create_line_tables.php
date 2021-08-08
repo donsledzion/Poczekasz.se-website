@@ -17,6 +17,7 @@ class CreateLineTables extends Migration
             $table->id();
             $table->string("line_name", 50);
             $table->boolean("status");
+            // false==disabled true==enabled
             $table->timestamps();
         });
         Schema::table('tramevents', function (Blueprint $table){
