@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <center>
-    <div class="row">
+    <center><div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Dodaj nowego usera</h2>
+                <h2>Edytuj Użytkownika</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('users.index') }}"> Wróć</a>
@@ -24,26 +23,27 @@
         </div>
     @endif
 
-    <form action="{{ route('users.store') }}" method="POST">
+    <form action="{{ route('users.update',$user->id) }}" method="POST">
         @csrf
+        @method('PUT')
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Nazwa:</strong>
-                    <input type="text" name="name" style="height:50px; width:150px" class="form-control" placeholder="Name">
+                    <input type="text" name="name" style="width:500px" value="{{ $user->name }}" class="form-control" placeholder="Name">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Email:</strong>
-                    <textarea class="form-control" style="height:50px; width:150px" name="email" placeholder="Email"></textarea>
+                    <textarea class="form-control" style="height:150px; width:500px" name="email" placeholder="Email">{{ $user->email }}</textarea>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Password:</strong>
-                    <input type="password" class="form-control" style="height:50px; width:150px" name="password" placeholder="Password"></input>
+                    <strong>Permissions: (16-User, 32-Vip, 128-Mod, 256-Admin)</strong>
+                    <textarea class="form-control" style="height:150px; width:500px" name="permissions" placeholder="Permissions">{{ $user->permissions }}</textarea>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
