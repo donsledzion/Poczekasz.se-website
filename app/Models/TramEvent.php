@@ -12,18 +12,19 @@ class TramEvent extends Model
     protected $table = 'tramevents';
 
 
-    public function line(): BelongsTo {
+    protected function line(): BelongsTo {
         return $this->belongsTo(Line::class);
     }
 
 
-    public function eventcategory(): BelongsTo{
+    protected function eventcategory(): BelongsTo{
         return $this->belongsTo(EventCategory::class);
     }
 
-    public function author(): BelongsTo {
+    protected function author(): BelongsTo {
         return $this->belongsTo(User::class);
     }
+
 
     protected $fillable = [
         'image_path',

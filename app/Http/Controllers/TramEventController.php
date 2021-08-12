@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTramEventRequest;
 use App\Models\EventCategory;
 use App\Models\TramEvent;
 use App\Models\User;
@@ -46,31 +47,26 @@ class TramEventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTramEventRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'eventcategory_id' => 'required',
-        ]);
+
         $poststatus=0;
+        $request->image= $request->file("image");
+        $tramevent= new TramEvent($request->validated());
         if($request->hasFile('image')){
             $request->image_path = $request->file('image')->store("tram_events");
         }
+
+
         if($request->author_id){
             $user= User::find($request->author_id);
             if($user->permissions >= 256){
-                $poststatus=1;
+                $poststatus = 1;
+
             }
         }
-        TramEvent::create([
-            'image_path' => $request->image_path ?? null,
-            'title' => $request->title,
-            'author_id' => $request->author_id,
-            'line_id' => $request->line_id,
-            'eventcategory_id' => $request->eventcategory_id,
-            'post_status' => $poststatus,
-        ]);
-
+        $tramevent->post_status = $poststatus;
+        $tramevent->save();
         return redirect()->route('wroclaw.welcome');
 
     }
@@ -104,9 +100,9 @@ class TramEventController extends Controller
      * @param  \App\Models\TramEvent  $trainEvent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TramEvent $tramEvent)
+    public function update(StoreTramEventRequest $request, TramEvent $tramEvent)
     {
-        $tramEvent->update($request->validated()->all());
+        $tramEvent->update($request->validated());
         return redirect()->route('tramevents.index');
     }
 
