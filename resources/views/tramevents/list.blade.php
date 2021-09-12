@@ -32,7 +32,13 @@
                     <td>{{$tramEvent->line->line_name ?? "Brak"}}</td>
                     <td>{{$tramEvent->eventcategory->name ?? "Brak"}}</td>
                     <td>{{ $tramEvent->post_status }}</td>
-                    <td>
+                    @if(!is_null($tramEvent->image_path))
+                        <td><img height=100px width="200px" src="{{asset('storage/'.$tramEvent->image_path)}}"></td>
+                    @else
+                        <td>Brak obrazka</td>
+                    @endif
+                        <td>
+
                         @if(Auth::user()->permissions >= 256)
                             <form action="{{ route('tramevents.destroy',$tramEvent->id) }}" method="POST">
                                 @csrf

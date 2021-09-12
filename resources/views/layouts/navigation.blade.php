@@ -83,6 +83,15 @@
                                     {{ __('Dodaj wydarzenie z MPK Wrocław') }}
                                 </x-dropdown-link>
                             </form>
+                            <form method="GET" action="{{ route('tramevents.index') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('tramevents.index')"
+                                                 onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Wydarzenia z MPK Wrocław') }}
+                                </x-dropdown-link>
+                            </form>
                         </x-slot>
                     </x-dropdown>
                 </div>

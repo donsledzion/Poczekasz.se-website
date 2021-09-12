@@ -4,7 +4,7 @@
     <center><div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edytuj Użytkownika</h2>
+                <h2>Edytuj TramEvent</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('users.index') }}"> Wróć</a>
@@ -22,28 +22,53 @@
             </ul>
         </div>
     @endif
-
-    <form action="{{ route('users.update',$user->id) }}" method="POST">
+    <form action="{{ route('tramevents.update',$tramEvent->id) }}" method="POST">
         @csrf
         @method('PUT')
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Nazwa:</strong>
-                    <input type="text" name="name" style="width:500px" value="{{ $user->name }}" class="form-control" placeholder="Name">
+                    <strong>Nazwa wydarzenia</strong>
+                    <input type="text" name="title" style="width:500px" value="{{ $tramEvent->title }}" class="form-control" placeholder="Tytuł">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Email:</strong>
-                    <textarea class="form-control" style="height:150px; width:500px" name="email" placeholder="Email">{{ $user->email }}</textarea>
+                    <strong>Autor:</strong>
+                    <textarea class="form-control" style="height:150px; width:500px" name="author_id" placeholder="Email" value="{{$tramEvent->author_id}}" hidden></textarea>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Permissions: (16-User, 32-Vip, 128-Mod, 256-Admin)</strong>
-                    <textarea class="form-control" style="height:150px; width:500px" name="permissions" placeholder="Permissions">{{ $user->permissions }}</textarea>
+                    <strong>Linia</strong>
+                    <select class="form-control @error('eventcategory_id') is-invalid @enderror" style="height:50px; width:300px" name="eventcategory_id">
+                        @foreach ($lines as $line)
+                            <option value="{{$line->id}}" @if($tramEvent->isSelectedLine($line->id)) selected @endif>{{$line->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Kategoria</strong>
+                    <select class="form-control @error('eventcategory_id') is-invalid @enderror" style="height:50px; width:300px" name="eventcategory_id">
+                        @foreach ($eventcategories as $eventcategory)
+                            <option value="{{$eventcategory->id}}" @if($tramEvent->isSelectedCategory($eventcategory->id)) selected @endif>{{$eventcategory->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Status Posta</strong> <!--- Tutaj przerobić bez foreacha --->
+                    <select class="form-control @error('post_status') is-invalid @enderror" style="height:50px; width:300px" name="post_status">
+                            <option value="0" @if($tramevent->isSelectedStatus(0)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(0)}}</option>
+                            <option value="1" @if($tramevent->isSelectedStatus(1)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(1)}}</option>
+                            <option value="2" @if($tramevent->isSelectedStatus(2)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(2)}}</option>
+                            <option value="3" @if($tramevent->isSelectedStatus(3)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(3)}}</option>
+                            <option value="4" @if($tramevent->isSelectedStatus(4)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(4)}}</option>
+                    </select>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

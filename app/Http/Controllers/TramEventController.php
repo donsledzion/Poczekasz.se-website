@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTramEventRequest;
 use App\Models\EventCategory;
+use App\Models\PostStatus;
 use App\Models\TramEvent;
 use App\Models\User;
 use App\Models\Line;
@@ -20,6 +21,10 @@ class TramEventController extends Controller
     public function index()
     {
         $tramEvents=TramEvent::orderBy('id', 'desc')->get();
+
+        foreach ($tramEvents as $tramEvent){
+            $tramEvent->post_status = (new TramEvent)->StatusName($tramEvent->post_status);
+        }
         return view('tramevents.list', [
         'tramevents'=> $tramEvents,
         'header' => "Lista wydarzeń poczekasz.se"
@@ -54,7 +59,7 @@ class TramEventController extends Controller
         $request->image= $request->file("image");
         $tramevent= new TramEvent($request->validated());
         if($request->hasFile('image')){
-            $request->image_path = $request->file('image')->store("tram_events");
+            $request->image_path = $request->file('image')->store("/public/tram_events");
         }
 
 
@@ -86,11 +91,19 @@ class TramEventController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\TramEvent  $trainEvent
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(TramEvent $tramEvent)
     {
-        return view('tramevents.edit',compact('tramEvent'))->with('header', 'Edycja wydarzenia '.$tramEvent->title);
+        error_log("TramEvent: ".$tramEvent);
+        $tramEvent = TramEvent::findOrFail($tramEvent) ;
+        error_log("TramEvent 2: ".$tramEvent);
+        return view('tramevents.edit', [
+            'tramEvent' => $tramEvent,
+            'header' => 'Edycja wydarzenia '.$tramEvent->title,
+            'lines' => Line::all(),
+            'eventcategories' => EventCategory::all(),
+            ]);
     }
 
     /**
@@ -103,6 +116,7 @@ class TramEventController extends Controller
     public function update(StoreTramEventRequest $request, TramEvent $tramEvent)
     {
         $tramEvent->update($request->validated());
+        error_log("TramEvent: ".$tramEvent);
         return redirect()->route('tramevents.index');
     }
 

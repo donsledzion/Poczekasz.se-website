@@ -28,7 +28,7 @@ class StoreTramEventRequest extends FormRequest
             'author_id' => 'nullable|integer',
             'line_id' => 'required|integer',
             'eventcategory_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpg,png|dimensions:ratio=1/1'
+            'image' => 'nullable|image|mimes:jpg,png'
         ];
     }
 }
