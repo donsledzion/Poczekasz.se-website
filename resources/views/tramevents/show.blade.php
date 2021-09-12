@@ -1,14 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-        use App\Models\EventCategory;
-        use App\Models\User;
-        use App\Models\Line;
-        $user=User::find($tramEvent->author_id);
-        $line=Line::find($tramEvent->line_id);
-        $category=EventCategory::find($tramEvent->category_id);
-    @endphp
+    {{-- Wywaliłem te php'y stąd. Wszystkie te dane można pobrać z relacji modelu ;) --}}
     <center>
         <div class="row">
             <div class="col-lg-12 margin-tb">
@@ -32,21 +25,21 @@
                 <div class="form-group">
                     <strong>Autor:</strong>
 
-                    {{$user->name ?? "Anonim";}}
+                    {{$tramEvent->author->name ?? "Anonim";}}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Linia:</strong>
 
-                    {{$line->line_name ?? "Nieokreślona";}}
+                    {{$tramEvent->line->line_name ?? "Nieokreślona";}}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Kategoria:</strong>
 
-                    {{$category->name ?? "Nieokreślona";}}
+                    {{$tramEvent->eventcategory->name ?? "Nieokreślona";}}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">

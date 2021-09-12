@@ -45,7 +45,7 @@
                                 @method('DELETE')
                         @endif
                         @if(Auth::user()->permissions >= 128)
-                            <a class="btn btn-info" href="{{ route('tramevents.show',$tramEvent->id) }}">Pokaż</a>
+                            <a class="btn btn-info" href="{{ route('tramevents.show',[$tramEvent->id]) }}">Pokaż</a>
                         @endif
                         @if(Auth::user()->permissions >= 256)
                             <a class="btn btn-primary" href="{{ route('tramevents.edit',$tramEvent->id) }}">Edytuj</a>

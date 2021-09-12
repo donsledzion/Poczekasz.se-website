@@ -1,0 +1,13 @@
+W widoku 'tramevents.show' => wywaliłem sekcję @php z danymi do ładowania, bo można je wyciągnąć z relacji modelu TramEvent
+W kontrolerze, w komentarzach miałeś deklarację argumentu $trainEvent (zamiast $tramEvent) - nie wiem czy miałoby to jakikolwiek wpływ, ale po co kusić los ;)
+W widoku 'tramevents.edit' => wyświetlana wartość w selektorze linii była niewłaściwa. Zamiast "name" należało wpisać "line_name" 
+W kontrolerze TramEventController wywaliłem z agrumentów funkcji (show i edit tylko ruszałem) deklarację typów: "TramEvent" i okazało się, że faktycznie do funkcji trafia tylko $id
+obiektu. W pierwszej linijce robię $tramEvent = findOrFail($id); i śmiga jak należy (zobacz sobie teraz error_log();
+W widokach jeszcze były takie rozbieżności, że w jednym widoku wołałeś $tramevent a w innym miejscu $tramEvent, ale to już byś sam doszedł jakby Laravel dotarł do widoku.
+
+Przemyśl zmianę nazw:
+1) Tabelę line_tables na lines
+2) kolumna w tabeli line_tables z "line_name" na "name" etc. 
+To ułatwia życie potem ;)
+polecam:
+https://github.com/alexeymezenin/laravel-best-practices

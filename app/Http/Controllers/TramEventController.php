@@ -10,13 +10,14 @@ use App\Models\User;
 use App\Models\Line;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class TramEventController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -79,25 +80,32 @@ class TramEventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TramEvent  $trainEvent
-     * @return \Illuminate\Http\Response
+     * @param  TramEvent  $tramEvent
+     * @return View
      */
-    public function show(TramEvent $tramEvent)
+    public function show(/*TramEvent */$tramEvent):View
     {
-        return view('tramevents.show',compact('tramEvent'))->with('header', 'Prezentacja wydarzenia '.$tramEvent->title);
+
+        error_log("TramEvent: ".$tramEvent);
+        $tramEvent = TramEvent::findOrFail($tramEvent) ;
+        /*error_log("TramEvent 2: ".$tramEvent);*/
+        return view('tramevents.show',[
+            'tramEvent' => $tramEvent,
+            'header' => 'Prezentacja wydarzenia '.$tramEvent->title,
+            ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TramEvent  $trainEvent
+     * @param  \App\Models\TramEvent  $tramEvent
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(TramEvent $tramEvent)
+    public function edit(/*TramEvent */$tramEvent)
     {
-        error_log("TramEvent: ".$tramEvent);
+        error_log("Lines: ".Line::all());
         $tramEvent = TramEvent::findOrFail($tramEvent) ;
-        error_log("TramEvent 2: ".$tramEvent);
+        /*error_log("TramEvent 2: ".$tramEvent);*/
         return view('tramevents.edit', [
             'tramEvent' => $tramEvent,
             'header' => 'Edycja wydarzenia '.$tramEvent->title,
@@ -110,7 +118,7 @@ class TramEventController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TramEvent  $trainEvent
+     * @param  \App\Models\TramEvent  $tramEvent
      * @return \Illuminate\Http\Response
      */
     public function update(StoreTramEventRequest $request, TramEvent $tramEvent)

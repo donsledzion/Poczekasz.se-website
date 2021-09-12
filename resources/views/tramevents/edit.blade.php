@@ -44,7 +44,7 @@
                     <strong>Linia</strong>
                     <select class="form-control @error('eventcategory_id') is-invalid @enderror" style="height:50px; width:300px" name="eventcategory_id">
                         @foreach ($lines as $line)
-                            <option value="{{$line->id}}" @if($tramEvent->isSelectedLine($line->id)) selected @endif>{{$line->name}}</option>
+                            <option value="{{$line->id}}" @if($tramEvent->isSelectedLine($line->id)) selected @endif>{{$line->line_name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -63,11 +63,11 @@
                 <div class="form-group">
                     <strong>Status Posta</strong> <!--- Tutaj przerobić bez foreacha --->
                     <select class="form-control @error('post_status') is-invalid @enderror" style="height:50px; width:300px" name="post_status">
-                            <option value="0" @if($tramevent->isSelectedStatus(0)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(0)}}</option>
-                            <option value="1" @if($tramevent->isSelectedStatus(1)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(1)}}</option>
-                            <option value="2" @if($tramevent->isSelectedStatus(2)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(2)}}</option>
-                            <option value="3" @if($tramevent->isSelectedStatus(3)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(3)}}</option>
-                            <option value="4" @if($tramevent->isSelectedStatus(4)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(4)}}</option>
+                            <option value="0" @if($tramEvent->isSelectedStatus(0)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(0)}}</option>
+                            <option value="1" @if($tramEvent->isSelectedStatus(1)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(1)}}</option>
+                            <option value="2" @if($tramEvent->isSelectedStatus(2)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(2)}}</option>
+                            <option value="3" @if($tramEvent->isSelectedStatus(3)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(3)}}</option>
+                            <option value="4" @if($tramEvent->isSelectedStatus(4)) selected @endif>{{(new \App\Models\TramEvent)->StatusName(4)}}</option>
                     </select>
                 </div>
             </div>
