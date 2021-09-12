@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(5);
+        $users = User::orderby('id', 'ASC')->paginate(5);
 
         return view('users.list',compact('users'))
             ->with('i', (request()->input('page', 1) - 1) * 5)->with('header', 'Userzy');
@@ -54,7 +54,7 @@ class UserController extends Controller
             'permissions' => '16']);
 
         return redirect()->route('users.index')
-            ->with('success','User Created successfully.');
+            ->with('success','Użytkownik został dodany pomyślnie.');
     }
 
     /**
@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show',compact('user'))->with('header', 'Prezentacja użytkownika');
+        return view('users.show',compact('user'))->with('header', 'Prezentacja użytkownika '.$user->name);
     }
 
     /**
@@ -76,7 +76,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit',compact('user'))->with('header', 'Edycja Użytkownika');
+        return view('users.edit',compact('user'))->with('header', 'Edycja Użytkownika '.$user->name);
     }
 
     /**
@@ -97,7 +97,7 @@ class UserController extends Controller
         $user->update($request->all());
 
         return redirect()->route('users.index')
-            ->with('success','Product updated successfully');
+            ->with('success','User updated successfully');
     }
 
     /**

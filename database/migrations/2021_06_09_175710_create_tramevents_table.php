@@ -18,9 +18,9 @@ class CreateTrameventsTable extends Migration
             $table->string("image_path", 150)->nullable();
             $table->string("title");
             $table->unsignedBigInteger("author_id")->nullable();
-            $table->unsignedBigInteger("line_id");
-            $table->unsignedBigInteger("category_id");
-            $table->integer("post_status"); // 0- wait to accept 1- accepted 2- denied 3- hidden
+            $table->unsignedBigInteger("line_id")->nullable();
+            $table->unsignedBigInteger("category_id")->nullable();
+            $table->integer("post_status"); // 0- wait to accept 1- accepted 2- denied 3- hidden 4-verification
             $table->timestamps();
             $table->foreign('author_id')->references("id")->on("users");
         });

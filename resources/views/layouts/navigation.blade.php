@@ -19,44 +19,136 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
+            @if (! is_null(Auth::user()))
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div>{{ Auth::user()->name }}</div>
 
-                            <div class="ml-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
+                                <div class="ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
 
-                    <x-slot name="content">
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                        <x-slot name="content">
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Wyloguj') }}
-                            </x-dropdown-link>
-                        </form>
-                        <form method="GET" action="{{ route('users.index') }}">
-                            @csrf
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Wyloguj') }}
+                                </x-dropdown-link>
+                            </form>
+                            @if (Auth::user()->permissions >=256)
+                                <form method="GET" action="{{ route('users.index') }}">
+                                    @csrf
 
-                            <x-dropdown-link :href="route('users.index')"
-                                             onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Użytkownicy') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
+                                    <x-dropdown-link :href="route('users.index')"
+                                                    onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Użytkownicy') }}
+                                    </x-dropdown-link>
+                                </form>
+                                <form method="GET" action="{{ route('lines.index') }}">
+                                    @csrf
 
+                                    <x-dropdown-link :href="route('lines.index')"
+                                                    onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Linie MPK Wrocław') }}
+                                    </x-dropdown-link>
+                                </form>
+                                <form method="GET" action="{{ route('categories.index') }}">
+                                    @csrf
+
+                                    <x-dropdown-link :href="route('categories.index')"
+                                                    onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Kategorie wydarzeń MPK Wrocław') }}
+                                    </x-dropdown-link>
+                                </form>
+                            @endif
+                            <form method="GET" action="{{ route('tramevents.create') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('tramevents.create')"
+                                                onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Dodaj wydarzenie z MPK Wrocław') }}
+                                </x-dropdown-link>
+                            </form>
+                            <form method="GET" action="{{ route('tramevents.index') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('tramevents.index')"
+                                                 onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Wydarzenia z MPK Wrocław') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+            @else
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div>Anonim</div>
+
+                                <div class="ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('wroclaw.welcome') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('wroclaw.welcome')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Wróć na stronę główną') }}
+                                </x-dropdown-link>
+                            </form>
+                            <form method="GET" action="{{ route('tramevents.create') }}">
+
+                                <x-dropdown-link :href="route('tramevents.create')"
+                                                onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Dodaj wydarzenie') }}
+                                </x-dropdown-link>
+                            </form>
+                            <form method="GET" action="{{ route('login') }}">
+
+                                <x-dropdown-link :href="route('login')"
+                                                onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Zaloguj się') }}
+                                </x-dropdown-link>
+                            </form>
+                            <form method="GET" action="{{ route('register') }}">
+
+                                <x-dropdown-link :href="route('register')"
+                                                onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Zarejestruj się') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+            @endif
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
@@ -87,8 +179,13 @@
                 </div>
 
                 <div class="ml-3">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    @if (! is_null(Auth::user()))
+                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    @else
+                        <div class="font-medium text-base text-gray-800">Anonim</div>
+                        <div class="font-medium text-sm text-gray-500">Anonim</div>
+                    @endif
                 </div>
             </div>
 
